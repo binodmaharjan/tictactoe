@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMultiple.setOnClickListener(this);
         btnAbout.setOnClickListener(this);
 
-        startActivity(new Intent(this, AboutActivity.class));
     }
 
     @Override

@@ -32,17 +32,17 @@ public class Board {
     public void selectPlayer(){
         Random rand=new Random();
         boolean choose=rand.nextBoolean();
-        X=(choose? 1:-1);
-        O=-X;
     }
 
 
     public void clearBoard() {
-        selectPlayer();
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 board[i][j] = EMPTY; // every cell should be empty
-        player = X; // the first player is 'X'
+
+        Random rand=new Random();
+        boolean choose=rand.nextBoolean();
+        player = (choose?X:O); // the first player is 'X' or O
 
     }
 

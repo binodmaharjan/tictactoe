@@ -1,11 +1,9 @@
-package com.maharjan411.tictactoe;
+package com.maharjan411.tictactoe.game;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-
-import com.maharjan411.tictactoe.game.Cell;
 
 /**
  * Created by binod on 4/27/16.

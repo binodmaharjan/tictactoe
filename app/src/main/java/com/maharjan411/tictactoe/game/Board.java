@@ -25,11 +25,11 @@ public class Board {
 
     public Board() {
         clearBoard();
-        changePlayer();
+
 
     }
 
-    public void changePlayer(){
+    public void selectPlayer(){
         Random rand=new Random();
         boolean choose=rand.nextBoolean();
         X=(choose? 1:-1);
@@ -38,6 +38,7 @@ public class Board {
 
 
     public void clearBoard() {
+        selectPlayer();
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 board[i][j] = EMPTY; // every cell should be empty

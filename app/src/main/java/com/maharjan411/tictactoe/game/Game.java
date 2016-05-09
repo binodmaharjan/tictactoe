@@ -190,20 +190,7 @@ public class Game extends View {
         invalidate();
     }
 
-    private void drawBallCross(int xCell, int yCell) {
 
-        if (turn) {
-            squareCell[xCell][yCell] = new Cross(squareCell[xCell][yCell].x, squareCell[xCell][yCell].y);
-        } else {
-            squareCell[xCell][yCell] = new Ball(squareCell[xCell][yCell].x, squareCell[xCell][yCell].y);
-        }
-    }
-
-    boolean isCellFilled(int x, int y) {
-        if (squareCell[x][y] instanceof Cross) return true;
-        if (squareCell[x][y] instanceof Ball) return true;
-        return false;
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -213,17 +200,9 @@ public class Game extends View {
 
         cellHeight = screenH / 3;
         cellWidth = screenW / 3;
-        initCells();
+        start();
     }
 
-    private void initCells() {
-        squareCell = new Cell[x][y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                squareCell[i][j] = new Empty(j * cellWidth, i * cellHeight);
-            }
-        }
-    }
 
     public void start() {
         board.clearBoard();

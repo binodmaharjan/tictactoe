@@ -30,9 +30,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-public class ChatService {
-	private static final String NAME_SECURE = "BluetoothChatSecure";
-	private static final String NAME_INSECURE = "BluetoothChatInsecure";
+public class BluetoothService {
+	private static final String NAME_SECURE = "BluetoothSecure";
+	private static final String NAME_INSECURE = "BluetoothInsecure";
 
 	// Unique UUID for this application
 	private static final UUID MY_UUID_SECURE = UUID
@@ -56,7 +56,7 @@ public class ChatService {
 													// connection
 	public static final int STATE_CONNECTED = 3; // connected to remote device
 
-	public ChatService(Context context, Handler handler) {
+	public BluetoothService(Context context, Handler handler) {
 		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		state = STATE_NONE;
 
@@ -205,7 +205,7 @@ public class ChatService {
 		handler.sendMessage(msg);
 
 		// Start the service over to restart listening mode
-		ChatService.this.start();
+		BluetoothService.this.start();
 	}
 
 	private void connectionLost() {
@@ -216,7 +216,7 @@ public class ChatService {
 		handler.sendMessage(msg);
 
 		// Start the service over to restart listening mode
-		ChatService.this.start();
+		BluetoothService.this.start();
 	}
 
 	// runs while listening for incoming connections
@@ -256,7 +256,7 @@ public class ChatService {
 
 				// If a connection was accepted
 				if (socket != null) {
-					synchronized (ChatService.this) {
+					synchronized (BluetoothService.this) {
 						switch (state) {
 						case STATE_LISTEN:
 						case STATE_CONNECTING:
@@ -330,7 +330,7 @@ public class ChatService {
 			}
 
 			// Reset the ConnectThread because we're done
-			synchronized (ChatService.this) {
+			synchronized (BluetoothService.this) {
 				connectThread = null;
 			}
 
@@ -383,7 +383,7 @@ public class ChatService {
 				} catch (IOException e) {
 					connectionLost();
 					// Start the service over to restart listening mode
-					ChatService.this.start();
+					BluetoothService.this.start();
 					break;
 				}
 			}

@@ -58,7 +58,7 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 
 	private StringBuffer outStringBuffer;
 	private BluetoothAdapter bluetoothAdapter = null;
-	private ChatService chatService = null;
+	private BluetoothService chatService = null;
 
 	private Handler handler = new Handler(new Callback() {
 
@@ -67,15 +67,15 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 			switch (msg.what) {
 			case MESSAGE_STATE_CHANGE:
 				switch (msg.arg1) {
-				case ChatService.STATE_CONNECTED:
+				case BluetoothService.STATE_CONNECTED:
 					setStatus(getString(R.string.title_connected_to,
 							connectedDeviceName));
 					break;
-				case ChatService.STATE_CONNECTING:
+				case BluetoothService.STATE_CONNECTING:
 					setStatus(R.string.title_connecting);
 					break;
-				case ChatService.STATE_LISTEN:
-				case ChatService.STATE_NONE:
+				case BluetoothService.STATE_LISTEN:
+				case BluetoothService.STATE_NONE:
 					setStatus(R.string.title_not_connected);
 					break;
 				}
@@ -225,7 +225,7 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 	}
 
 	private void sendMessage(String message) {
-		if (chatService.getState() != ChatService.STATE_CONNECTED) {
+		if (chatService.getState() != BluetoothService.STATE_CONNECTED) {
 			Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
 					.show();
 			return;
@@ -251,7 +251,7 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 	}
 
 	private void setupChat() {
-		chatService = new ChatService(this, handler);
+		chatService = new BluetoothService(this, handler);
 		outStringBuffer = new StringBuffer("");
 	}
 
@@ -274,7 +274,7 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 		super.onResume();
 
 		if (chatService != null) {
-			if (chatService.getState() == ChatService.STATE_NONE) {
+			if (chatService.getState() == BluetoothService.STATE_NONE) {
 				chatService.start();
 			}
 		}

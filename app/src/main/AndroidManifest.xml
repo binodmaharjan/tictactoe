@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maharjan411.tictactoe">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +22,8 @@
         </activity>
         <activity android:name="com.maharjan411.tictactoe.game.GameActivity" />
         <activity android:name="com.maharjan411.tictactoe.about.AboutActivity"></activity>
+        <activity android:name=".bluetooth.BluetoothTwoPlayerActivity"></activity>
+        <activity android:name=".bluetooth.DeviceListActivity"/>
     </application>
 
 </manifest>

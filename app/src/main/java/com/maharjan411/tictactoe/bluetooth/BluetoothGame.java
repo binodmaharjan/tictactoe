@@ -1,4 +1,4 @@
-package com.maharjan411.tictactoe.game;
+package com.maharjan411.tictactoe.bluetooth;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,15 +11,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.maharjan411.tictactoe.game.Ball;
+import com.maharjan411.tictactoe.game.Board;
+import com.maharjan411.tictactoe.game.Cell;
+import com.maharjan411.tictactoe.game.Cross;
+import com.maharjan411.tictactoe.game.Empty;
+import com.maharjan411.tictactoe.game.GameActivity;
 import com.maharjan411.tictactoe.utils.LogUtil;
 
 
 /**
  * Created by binod on 4/27/16.
  */
-public class Game extends View {
+public class BluetoothGame extends View {
 
-    private static final String TAG = Game.class.getSimpleName();
+    private static final String TAG = BluetoothGame.class.getSimpleName();
     private Context mContext;
     private int screenH, screenW;
     final int x = 3, y = 3;
@@ -37,27 +43,33 @@ public class Game extends View {
     private RectF firstRect = new RectF();
     private RectF secondRect = new RectF();
 
-    private boolean turn = false;
+    private boolean turn = true;
 
     private int gameMode;
+
+    IMessage mListener;
+
+    public void setListener(IMessage mListener) {
+        this.mListener = mListener;
+    }
 
     public void setGameMode(int gameMode) {
         this.gameMode = gameMode;
     }
 
-    public Game(Context context) {
+    public BluetoothGame(Context context) {
         super(context);
         mContext = context;
         init();
     }
 
-    public Game(Context context, AttributeSet attrs) {
+    public BluetoothGame(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         init();
     }
 
-    public Game(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BluetoothGame(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
         init();
@@ -131,10 +143,10 @@ public class Game extends View {
 
     private void drawMark(int i, int j, Canvas canvas) {
         switch (board.getMark(i, j)) {
-            case 1:
+            case Board.X:
                 cross.draw(canvas, mContext.getResources(), i, j, screenW / 3, screenH / 3);
                 break;
-            case -1:
+            case Board.O:
                 ball.draw(canvas, mContext.getResources(), i, j, screenW / 3, screenH / 3);
                 break;
             default:
@@ -146,6 +158,12 @@ public class Game extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if(!turn){
+
+            Toast.makeText(mContext,"Not your turn",Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         int x = (int) event.getX();
         int y = (int) event.getY();
@@ -169,7 +187,14 @@ public class Game extends View {
             try {
 
                 board.putMark(xCell, yCell);
+
+                turn=false;
+
+                if(mListener!=null){
+                    mListener.onTouchDetected(true,xCell,yCell,board.getPlayer());
+                }
                 win = board.isWin(board.getMark(xCell, yCell));
+
 
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
@@ -197,22 +222,32 @@ public class Game extends View {
     }
 
 
-
-
     public void start() {
-        board.clearBoard();
+        board.clearBoard(0);
         win = false;
         isGameOver = false;
         invalidate();
     }
 
-    public int[][] getBoard() {
-        return board.getBoard();
+    public void putMark(int x,int y,boolean turn,int player){
+        board.putMark(x,y);
+        this.turn=turn;
+        win = board.isWin(board.getMark(x, y));
+        isGameOver = board.isGameCompleted();
+        if (isGameOver) {
+            Toast.makeText(mContext, " game over", Toast.LENGTH_SHORT);
+        }
+        board.setPlayer(player);
+        invalidate();
     }
 
-    public void setmark(int [][] board){
-        this.board.setBoard(board);
-        invalidate();
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+
+    public interface IMessage{
+        void onTouchDetected(boolean turn,int x, int y, int player);
     }
 
 }

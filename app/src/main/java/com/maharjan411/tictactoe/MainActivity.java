@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-
 import com.maharjan411.tictactoe.about.AboutActivity;
+import com.maharjan411.tictactoe.bluetooth.BluetoothTwoPlayerActivity;
 import com.maharjan411.tictactoe.game.GameActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnSingle;
     Button btnMultiple;
     private Button btnAbout;
+    private Button btnBluetooth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +25,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSingle=(Button)findViewById(R.id.btnSingle);
         btnMultiple=(Button)findViewById(R.id.btnMultiple);
         btnAbout=(Button)findViewById(R.id.btnAbout);
+        btnBluetooth=(Button)findViewById(R.id.btnBluetooth);
 
 
         btnSingle.setOnClickListener(this);
         btnMultiple.setOnClickListener(this);
         btnAbout.setOnClickListener(this);
+        btnBluetooth.setOnClickListener(this);
+
+
 
     }
 
@@ -44,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnAbout:
                 startActivity(new Intent(this, AboutActivity.class));
+                break;
+            case R.id.btnBluetooth:
+                startActivity(new Intent(this, BluetoothTwoPlayerActivity.class));
                 break;
 
         }

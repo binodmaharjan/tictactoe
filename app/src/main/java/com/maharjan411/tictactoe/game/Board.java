@@ -12,7 +12,7 @@ import java.util.Random;
 public class Board {
 
 
-    public static  int X = 1, O = -1; // players
+    public static final  int X = 1, O = -1; // players
 
     public static final int EMPTY = 0; // empty cell
 
@@ -23,10 +23,16 @@ public class Board {
     private int winingLine[] = new int[4];
 
 
+    public int[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(int[][] board) {
+        this.board = board;
+    }
+
     public Board() {
         clearBoard();
-
-
     }
 
     public void selectPlayer(){
@@ -46,6 +52,17 @@ public class Board {
 
     }
 
+    public void clearBoard(int bluetooth) {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                board[i][j] = EMPTY; // every cell should be empty
+
+        Random rand=new Random();
+        boolean choose=rand.nextBoolean();
+        player = X; // the first player is 'X' or O
+
+    }
+
     public int getMark(int i, int j) {
         return board[i][j];
     }
@@ -53,6 +70,11 @@ public class Board {
     public int getPlayer() {
         return player;
     }
+
+    public void setPlayer(int player){
+        this.player=player;
+    }
+
 
 
     /**

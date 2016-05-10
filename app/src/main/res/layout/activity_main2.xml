@@ -26,12 +26,22 @@
         android:layout_marginBottom="40dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Two players"
         android:id="@+id/btnMultiple"
         android:layout_below="@+id/btnSingle"
+        android:layout_marginBottom="40dp"
         android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Two players via bluetooth"
+            android:id="@+id/btnBluetooth"
+            android:layout_centerHorizontal="true" />
+
+
 
     <Button
         android:layout_width="match_parent"

@@ -26,17 +26,9 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maharjan411.tictactoe.R;
@@ -61,9 +53,6 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 	private static final int REQUEST_ENABLE_BT = 3;
 	private static final String TAG = BluetoothTwoPlayerActivity.class.getSimpleName();
 
-	private ListView lvMainChat;
-	private EditText etMain;
-	private Button btnSend;
 
 	private String connectedDeviceName = null;
 
@@ -160,22 +149,6 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 		}
 	}
 
-	private void getWidgetReferences() {
-		lvMainChat = (ListView) findViewById(R.id.lvMainChat);
-		etMain = (EditText) findViewById(R.id.etMain);
-		btnSend = (Button) findViewById(R.id.btnSend);
-	}
-
-	private void bindEventHandler() {
-		etMain.setOnEditorActionListener(mWriteListener);
-
-		btnSend.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				String message = etMain.getText().toString();
-				sendMessage(message);
-			}
-		});
-	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
@@ -266,17 +239,6 @@ public class BluetoothTwoPlayerActivity extends AppCompatActivity {
 		}
 	}
 
-	private TextView.OnEditorActionListener mWriteListener = new TextView.OnEditorActionListener() {
-		public boolean onEditorAction(TextView view, int actionId,
-				KeyEvent event) {
-			if (actionId == EditorInfo.IME_NULL
-					&& event.getAction() == KeyEvent.ACTION_UP) {
-				String message = view.getText().toString();
-				sendMessage(message);
-			}
-			return true;
-		}
-	};
 
 	private final void setStatus(int resId) {
 		final ActionBar actionBar = getSupportActionBar();

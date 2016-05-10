@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -16,7 +15,6 @@ import com.maharjan411.tictactoe.game.Board;
 import com.maharjan411.tictactoe.game.Cell;
 import com.maharjan411.tictactoe.game.Cross;
 import com.maharjan411.tictactoe.game.Empty;
-import com.maharjan411.tictactoe.game.GameActivity;
 import com.maharjan411.tictactoe.utils.LogUtil;
 
 
@@ -120,23 +118,9 @@ public class BluetoothGame extends View {
             Toast.makeText(mContext, board.getWinner(), Toast.LENGTH_SHORT).show();
 
         }
-
-        if (gameMode == GameActivity.SINGLE_PLAYER) {
-            if (board.getPlayer() < 0) {
-                if (!isGameOver) {
-                    Point pt = board.getComputerMove(board.getPlayer());
-                    move(pt.x, pt.y);
-                } else {
-                    Toast.makeText(mContext, board.getWinner(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        } else {
             if (isGameOver) {
                 Toast.makeText(mContext, board.getWinner(), Toast.LENGTH_SHORT).show();
             }
-        }
-
 
     }
 
@@ -164,38 +148,25 @@ public class BluetoothGame extends View {
             Toast.makeText(mContext,"Not your turn",Toast.LENGTH_SHORT).show();
             return false;
         }
-
         int x = (int) event.getX();
         int y = (int) event.getY();
-
         int xCell = (int) (x / cellWidth);
         int yCell = (int) (y / cellHeight);
-
         LogUtil.i(TAG, "x " + x + " y " + y + " xCell " + xCell + " yCell " + yCell);
-
-
         move(xCell, yCell);
 
         return super.onTouchEvent(event);
     }
 
     private void move(int xCell, int yCell) {
-
-
         if (!win || !board.isGameCompleted()) {
-
             try {
-
                 board.putMark(xCell, yCell);
-
                 turn=false;
-
                 if(mListener!=null){
                     mListener.onTouchDetected(true,xCell,yCell,board.getPlayer());
                 }
                 win = board.isWin(board.getMark(xCell, yCell));
-
-
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
                 Toast.makeText(mContext, " already marked", Toast.LENGTH_SHORT).show();
